@@ -1,10 +1,4 @@
 class User < ApplicationRecord
-  def admin?
-    false
-  end
-  # def present?
-  #   true
-  # end
   has_many :articles
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
