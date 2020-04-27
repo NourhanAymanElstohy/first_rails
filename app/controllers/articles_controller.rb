@@ -1,13 +1,15 @@
 class ArticlesController < ApplicationController
     
     http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
-    
+    load_and_authorize_resource
+
     def index
         @articles = Article.all
     end
 
     def show
         @article = Article.find(params[:id])
+        # authorize! :read, @article
     end
 
     def new
@@ -23,7 +25,8 @@ class ArticlesController < ApplicationController
         # @article = Article.new(params[:article])
         # @article = Article.new(params.require(:article).permit(:title, :text))
         @article=Article.new(article_params)
-
+        @article.user_id=current_user.id
+        
         if @article.save
             redirect_to @article
         else
